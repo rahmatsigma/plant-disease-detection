@@ -7,7 +7,7 @@ from tensorflow.keras.optimizers import Adam
 import os
 
 # --- KONFIGURASI ---
-DATASET_DIR = 'dataset/train' # Pastikan path ini benar sesuai folder Anda
+DATASET_DIR = 'dataset/train' 
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
 EPOCHS = 10
@@ -17,12 +17,12 @@ MODEL_SAVE_PATH = 'models/plant_disease_model.h5'
 def train_model():
     # 1. Data Augmentation (Agar model lebih pintar mengenali variasi gambar)
     train_datagen = ImageDataGenerator(
-        rescale=1./255,             # Normalisasi pixel ke 0-1
-        rotation_range=20,          # Putar gambar acak
-        width_shift_range=0.2,      # Geser horizontal
-        height_shift_range=0.2,     # Geser vertikal
-        horizontal_flip=True,       # Balik gambar horizontal
-        validation_split=0.2        # 20% data dipakai untuk validasi
+        rescale=1./255,             
+        rotation_range=20,         
+        width_shift_range=0.2,     
+        height_shift_range=0.2,     
+        horizontal_flip=True,       
+        validation_split=0.2        
     )
 
     # 2. Load Data Training
@@ -45,27 +45,25 @@ def train_model():
         subset='validation'
     )
 
-    # Simpan label kelas (misal: ['Early_Blight', 'Late_Blight', 'Healthy'])
+    #label kelas 
     class_names = list(train_generator.class_indices.keys())
     print(f"Kelas yang ditemukan: {class_names}")
     
-    # Simpan nama kelas ke file text agar bisa dipakai di predict.py
+    #nama kelas 
     with open('models/class_names.txt', 'w') as f:
         f.write('\n'.join(class_names))
 
-    # 4. Membangun Model (Transfer Learning dengan MobileNetV2)
-    # include_top=False artinya kita membuang lapisan akhir MobileNet (klasifikasi 1000 objek umum)
+    # 4. Membangun Model 
     base_model = MobileNetV2(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
     
-    # Bekukan base_model agar bobotnya tidak rusak saat latihan awal
+    # Bekukan base_model 
     base_model.trainable = False 
 
-    # Tambahkan lapisan baru sesuai kasus kita
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
     x = Dense(128, activation='relu')(x)
-    x = Dropout(0.5)(x) # Mencegah overfitting
-    predictions = Dense(len(class_names), activation='softmax')(x) # Output layer
+    x = Dropout(0.5)(x) 
+    predictions = Dense(len(class_names), activation='softmax')(x) 
 
     model = Model(inputs=base_model.input, outputs=predictions)
 

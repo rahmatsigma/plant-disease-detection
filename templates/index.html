@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deteksi Penyakit Tanaman</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { margin-top: 50px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        #preview { max-width: 100%; height: auto; border-radius: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white text-center">
+                    <h4>🍃 Plant Disease Detector</h4>
+                </div>
+                <div class="card-body">
+                    <form action="/" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Upload Foto Daun</label>
+                            <input class="form-control" type="file" name="file" id="file" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Analisis Gambar</button>
+                        </div>
+                    </form>
+
+                    {% if prediction %}
+                    <div class="alert alert-info mt-4 text-center">
+                        <h5>Hasil: <strong>{{ prediction }}</strong></h5>
+                        <p>Confidence: {{ "%.2f"|format(confidence) }}%</p>
+                        
+                        {% if img_url %}
+                        <img src="{{ img_url }}" id="preview" alt="Gambar Upload">
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
