@@ -32,13 +32,29 @@
                     </form>
 
                     {% if prediction %}
-                    <div class="alert alert-info mt-4 text-center">
-                        <h5>Hasil: <strong>{{ prediction }}</strong></h5>
-                        <p>Confidence: {{ "%.2f"|format(confidence) }}%</p>
+                    <div class="alert alert-info mt-4">
+                        <h4 class="text-center mb-3">Hasil Analisis AI</h4>
+                        <p class="text-center">Diagnosa: <strong>{{ prediction }}</strong></p>
+                        <p class="text-center mb-4">Keyakinan: {{ "%.2f"|format(confidence) }}%</p>
                         
-                        {% if img_url %}
-                        <img src="{{ img_url }}" id="preview" alt="Gambar Upload">
-                        {% endif %}
+                        <div class="row text-center">
+                            <div class="col-md-6 mb-3">
+                                <h6>Gambar Asli (Input)</h6>
+                                {% if img_url %}
+                                <img src="{{ img_url }}" class="img-fluid rounded" alt="Gambar Upload">
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <h6>Visualisasi Grad-CAM (XAI)</h6>
+                                {% if gradcam_url %}
+                                <img src="{{ gradcam_url }}" class="img-fluid rounded" alt="Grad-CAM Result">
+                                <small class="text-muted d-block mt-2">
+                                    Area 🔴 Merah/Kuning menunjukkan bagian yang paling diperhatikan AI untuk membuat keputusan.
+                                </small>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                     {% endif %}
 
