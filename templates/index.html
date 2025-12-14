@@ -58,6 +58,17 @@
                     </div>
                     {% endif %}
 
+
+                    {% if solution %}
+                    <div style="margin-top: 20px; text-align: left; background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <h3>Informasi Penyakit</h3>
+                        <p><strong>Deskripsi:</strong> {{ solution.description }}</p>
+                        
+                        <h3>Rekomendasi Penanganan:</h3>
+                        <p>{{ solution.treatment.replace('\n', '<br>')|safe }}</p>
+                    </div>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
