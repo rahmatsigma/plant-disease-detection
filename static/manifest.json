@@ -1,0 +1,20 @@
+{
+  "name": "Dokter Tanaman AI",
+  "short_name": "PlantAI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e9f7ef",
+  "theme_color": "#198754",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/628/628283.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/628/628283.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
